@@ -138,12 +138,12 @@ NontermianlNode* ASTCreater:: create_tree(std::vector<Token> token_stream)
 			int product=trans_table[production_map.at(x.value)][input_map.at(ip->type)];
 			if(product!=0)
 			{
-				std::cout<<x.value<<":";
-				for(auto it:productions.at(product))
-				{
-					std::cout<<it.value<<" ";
-				}
-				std::cout<<std::endl;
+				//std::cout<<x.value<<":";
+				//for(auto it:productions.at(product))
+				//{
+				//	std::cout<<it.value<<" ";
+				//}
+				//std::cout<<std::endl;
 
 				Stack.pop();
 				NodeStack.pop();

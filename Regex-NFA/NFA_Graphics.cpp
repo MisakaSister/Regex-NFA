@@ -50,6 +50,7 @@ NFA_Node* NFA_Graphics::add_node()
 {
 	auto node=new NFA_Node();
 	node_list.push_back(node);
+	node_map.insert(std::pair<int,NFA_Node*>(cur_num,node));
 	node->state_num=cur_num++;
 
 	return node;
@@ -107,6 +108,8 @@ Sub_NFA* NFA_Graphics::link_NFA(ASTNode* root,Sub_NFA* left,Sub_NFA* right)
 void NFA_Graphics::create_NFA(ASTNode* ast)
 {
 	auto t=visit(ast);
+	start_state=t->start->state_num;
+	finish_state=t->finish->state_num;
 }
 
 Sub_NFA* NFA_Graphics::visit(ASTNode* root)
@@ -121,4 +124,17 @@ Sub_NFA* NFA_Graphics::visit(ASTNode* root)
 
 	return link_NFA(root,left,right);
 	
+}
+
+void NFA_Graphics::move(int state_num,char cur_input,std::vector<int> &v)
+{
+	auto cur_node=node_map.at(state_num)->next;
+	while(cur_node!=NULL)
+	{
+		if(cur_node->grade==cur_input)
+		{
+			v.push_back(cur_node->state_num);
+		}
+		cur_node=cur_node->next;
+	}
 }
