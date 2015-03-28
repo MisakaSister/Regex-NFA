@@ -9,7 +9,7 @@
 class Regex
 {
 public:
-	Regex(void);
+	Regex(std::string express);
 	~Regex(void);
 	void compile(std::string  express);
 	bool match(std::string str);

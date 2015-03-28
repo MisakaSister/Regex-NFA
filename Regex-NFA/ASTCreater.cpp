@@ -2,13 +2,9 @@
 #include<stack>
 #include<iostream>
 #include"Tokenizer.h"
-typedef std::vector<GrammerToken> production;
 
-std::map<std::string,int> production_map;
-std::map<std::string,int> input_map;
-std::vector<production> productions;
-std::map<std::string,GrammerToken> grammer_token_map;
-int trans_table[7][6]={
+
+int ASTCreater::trans_table[7][6]={
 	1,0,0,1,0,0,
 	0,0,2,0,3,3,
 	4,0,0,4,0,0,
@@ -32,7 +28,36 @@ ASTNode::ASTNode()
 
 ASTNode::~ASTNode()
 {
+	delete left_child;
+	delete right_child;
 }
+NontermianlNode::~NontermianlNode()
+{
+	for(auto it:child)
+	{
+		delete it;
+	}
+
+}
+
+
+
+ASTCreater::ASTCreater(std::string express)
+{
+	initialize();
+	Tokenizer* tokenizer=new Tokenizer(express);
+	NontermianlNode* root=create_tree(tokenizer->m_tokens);
+	ast=create_AST(root);
+	delete tokenizer;
+	delete root;
+}
+ASTCreater::~ASTCreater()
+{
+
+}
+
+
+
 void ASTCreater::initialize()
 {
 	productions.resize(12);
@@ -69,7 +94,6 @@ void ASTCreater::initialize()
 
 	productions.at(1).push_back(grammer_token_map.at("connect"));
 	productions.at(1).push_back(grammer_token_map.at("or_"));
-	GrammerToken g=grammer_token_map.at("or_");
 	productions.at(2).push_back(grammer_token_map.at("|"));
 	productions.at(2).push_back(grammer_token_map.at("connect"));
 	productions.at(2).push_back(grammer_token_map.at("or_"));

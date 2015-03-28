@@ -60,7 +60,7 @@ public:
 	int start_state;
 	int finish_state;
 private:
-	std::vector<NFA_Node*> node_list;
+	//std::vector<NFA_Node*> node_list;
 	int cur_num;
 	std::map<int,NFA_Node*> node_map;
 };

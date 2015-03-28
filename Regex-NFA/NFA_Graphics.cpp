@@ -49,7 +49,7 @@ void NFA_Graphics::add_edge(NFA_Node* node_from,NFA_Node* node_to,char grade)
 NFA_Node* NFA_Graphics::add_node()
 {
 	auto node=new NFA_Node();
-	node_list.push_back(node);
+	//node_list.push_back(node);
 	node_map.insert(std::pair<int,NFA_Node*>(cur_num,node));
 	node->state_num=cur_num++;
 

@@ -1,25 +1,28 @@
 #include "Regex.h"
 
 
-Regex::Regex(void)
+Regex::Regex(std::string express)
 {
+	auto astCreater=new ASTCreater(express);
+	auto ast=astCreater->getAST();
+	nfa=new NFA_Graphics;
+	nfa->create_NFA(ast);
+	already_on.resize(nfa->size());
+	delete ast;
 	
 }
 
 
 Regex::~Regex(void)
 {
+	delete nfa;
 }
 
 void Regex::compile(std::string express)
 {
-	ASTCreater::initialize();
-	Tokenizer* tokenizer=new Tokenizer(express);
-	NontermianlNode* root=ASTCreater::create_tree(tokenizer->m_tokens);
-	ASTNode*  ast=ASTCreater::create_AST(root);
-	nfa=new NFA_Graphics();
-	nfa->create_NFA(ast);
-	already_on.resize(nfa->size());
+	
+	
+	
 	
 }
 

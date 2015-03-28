@@ -3,6 +3,9 @@
 #include<string>
 #include<map>
 #include"Tokenizer.h"
+class GrammerToken;
+
+typedef std::vector<GrammerToken> production;
 
 
 class ASTNode
@@ -25,6 +28,7 @@ public:
 	ASTNode* node;
 	int num;
 	std::vector<NontermianlNode*>child;
+	~NontermianlNode();
 };
 
 
@@ -49,10 +53,23 @@ public:
 class ASTCreater
 {
 public:
-	static void initialize();
-	static NontermianlNode* create_tree(std::vector<Token> token_stream);
-	static ASTNode* create_AST(NontermianlNode* root);
-	static void visit_tree(NontermianlNode* root);
+	ASTCreater(std::string express);
+	~ASTCreater();
+	ASTNode* getAST(){
+		return ast;
+	}
+private:
+	void initialize();
+	NontermianlNode* create_tree(std::vector<Token> token_stream);
+	ASTNode* create_AST(NontermianlNode* root);
+	void visit_tree(NontermianlNode* root);
+private:
+	ASTNode* ast;
+	std::map<std::string,int> production_map;
+	std::map<std::string,int> input_map;
+	std::vector<production> productions;
+	std::map<std::string,GrammerToken> grammer_token_map;
+	static int trans_table[7][6];
 };
 
 
